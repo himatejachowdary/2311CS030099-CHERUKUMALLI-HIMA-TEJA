@@ -8,10 +8,10 @@ export function NotificationDetailsPage() {
 
   if (!notification) {
     return (
-      <div className="rounded-3xl border border-white/10 bg-white/5 p-8">
-        <h2 className="text-2xl font-semibold text-white">Notification not found</h2>
-        <p className="mt-3 text-sm text-slate-400">The requested notification is not available in the current dataset.</p>
-        <Link className="mt-6 inline-flex rounded-full bg-accent px-5 py-3 text-sm font-semibold text-slate-950" to="/notifications">
+      <div className="border border-gray-300 bg-gray-50 p-8">
+        <h2 className="text-2xl font-semibold text-gray-900">Notification not found</h2>
+        <p className="mt-3 text-sm text-gray-600">The requested notification is not available in the current dataset.</p>
+        <Link className="mt-6 inline-flex bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700" to="/notifications">
           Back to notifications
         </Link>
       </div>
@@ -19,23 +19,23 @@ export function NotificationDetailsPage() {
   }
 
   return (
-    <article className="rounded-3xl border border-white/10 bg-white/5 p-8">
+    <article className="border border-gray-300 bg-gray-50 p-8">
       <div className="flex flex-wrap items-center gap-3">
-        <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accentSoft">
+        <span className="bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
           {notification.type}
         </span>
-        <span className={`rounded-full px-3 py-1 text-xs font-semibold ${notification.isRead ? 'bg-white/10 text-slate-300' : 'bg-accent/15 text-accentSoft'}`}>
+        <span className={`px-3 py-1 text-xs font-semibold ${notification.isRead ? 'bg-gray-100 text-gray-600' : 'bg-blue-100 text-blue-700'}`}>
           {notification.isRead ? 'Read' : 'Unread'}
         </span>
       </div>
-      <h2 className="mt-5 text-3xl font-semibold text-white">{notification.message}</h2>
+      <h2 className="mt-5 text-3xl font-semibold text-gray-900">{notification.message}</h2>
       <dl className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <InfoCard label="Priority" value={notification.priority} />
         <InfoCard label="Student ID" value={notification.studentId} />
         <InfoCard label="Created" value={formatDate(notification.createdAt)} />
         <InfoCard label="Updated" value={formatDate(notification.updatedAt)} />
       </dl>
-      <Link className="mt-8 inline-flex rounded-full bg-accent px-5 py-3 text-sm font-semibold text-slate-950" to="/notifications">
+      <Link className="mt-8 inline-flex bg-blue-600 px-5 py-3 text-sm font-semibold text-white hover:bg-blue-700" to="/notifications">
         Back to notifications
       </Link>
     </article>
@@ -44,9 +44,9 @@ export function NotificationDetailsPage() {
 
 function InfoCard({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-slate-950/60 p-4">
-      <dt className="text-xs uppercase tracking-[0.2em] text-slate-400">{label}</dt>
-      <dd className="mt-2 text-sm font-medium text-white">{value}</dd>
+    <div className="border border-gray-300 bg-white p-4">
+      <dt className="text-xs text-gray-600">{label}</dt>
+      <dd className="mt-2 text-sm font-medium text-gray-900">{value}</dd>
     </div>
   );
 }

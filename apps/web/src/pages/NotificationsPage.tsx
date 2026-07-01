@@ -7,10 +7,10 @@ export function NotificationsPage() {
     <section className="space-y-6">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="text-sm uppercase tracking-[0.3em] text-accentSoft/70">Notifications</p>
-          <h2 className="mt-2 text-3xl font-semibold text-white">Notification feed</h2>
+          <p className="text-sm text-gray-600">Notifications</p>
+          <h2 className="mt-2 text-3xl font-semibold text-gray-900">Notification feed</h2>
         </div>
-        <p className="max-w-lg text-sm text-slate-400">
+        <p className="max-w-lg text-sm text-gray-600">
           The next feature slice will replace the seeded feed with API-backed pagination, search, and filters.
         </p>
       </div>
@@ -20,24 +20,24 @@ export function NotificationsPage() {
           <Link
             key={notification.id}
             to={`/notifications/${notification.id}`}
-            className="group rounded-3xl border border-white/10 bg-white/5 p-5 transition hover:border-accent/40 hover:bg-white/10"
+            className="group border border-gray-300 bg-white p-5 transition hover:border-gray-400 hover:bg-gray-50"
           >
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="space-y-2">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-accentSoft">
+                  <span className="bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700">
                     {notification.type}
                   </span>
-                  <span className={`rounded-full px-3 py-1 text-xs font-semibold ${notification.isRead ? 'bg-white/10 text-slate-300' : 'bg-accent/15 text-accentSoft'}`}>
+                  <span className={`px-3 py-1 text-xs font-semibold ${notification.isRead ? 'bg-gray-100 text-gray-600' : 'bg-blue-100 text-blue-700'}`}>
                     {notification.isRead ? 'Read' : 'Unread'}
                   </span>
-                  <span className="rounded-full bg-amber-400/15 px-3 py-1 text-xs font-semibold text-amber-200">
+                  <span className="bg-yellow-100 px-3 py-1 text-xs font-semibold text-yellow-800">
                     Priority {notification.priority}
                   </span>
                 </div>
-                <p className="text-base leading-6 text-slate-100">{notification.message}</p>
+                <p className="text-base leading-6 text-gray-800">{notification.message}</p>
               </div>
-              <span className="text-sm text-slate-400 transition group-hover:text-white">Open details</span>
+              <span className="text-sm text-gray-500 transition group-hover:text-gray-700">Open details</span>
             </div>
           </Link>
         ))}
