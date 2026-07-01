@@ -1,0 +1,19 @@
+{
+  "name": "campus-notification-management-system",
+  "private": true,
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n web,api -c cyan,magenta \"npm run dev --workspace @campus-notifications/web\" \"npm run dev --workspace @campus-notifications/api\"",
+    "dev:web": "npm run dev --workspace @campus-notifications/web",
+    "dev:api": "npm run dev --workspace @campus-notifications/api",
+    "build": "npm run build --workspace @campus-notifications/web && npm run build --workspace @campus-notifications/api",
+    "typecheck": "npm run typecheck --workspace @campus-notifications/web && npm run typecheck --workspace @campus-notifications/api",
+    "test": "npm run test --workspace @campus-notifications/api"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.8.3"
+  }
+}

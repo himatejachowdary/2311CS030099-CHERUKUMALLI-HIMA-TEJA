@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  id            String         @id @default(cuid())
+  name          String
+  email         String         @unique
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  notifications Notification[]
+
+  @@map("students")
+}
+
+model Notification {
+  id               String   @id @default(cuid())
+  notificationType String
+  message          String
+  priority         Int
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  isRead           Boolean  @default(false)
+  studentId        String
+  student          Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  @@index([studentId])
+  @@index([isRead])
+  @@index([createdAt])
+  @@index([priority])
+  @@index([notificationType])
+  @@index([studentId, isRead, createdAt, priority, notificationType])
+  @@map("notifications")
+}
