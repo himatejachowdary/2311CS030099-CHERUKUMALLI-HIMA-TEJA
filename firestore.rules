@@ -1,0 +1,60 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isAdmin() {
+      return isAuthenticated() && 
+        (request.auth.token.role == 'admin' || 
+         request.auth.token.email == 'admin@campus.edu' ||
+         request.auth.token.email.startsWith('admin@') ||
+         (exists(/databases/$(database)/documents/agents/$(request.auth.uid)) && 
+          get(/databases/$(database)/documents/agents/$(request.auth.uid)).data.role == 'admin'));
+    }
+    
+    function isAgent() {
+      return isAuthenticated() && 
+        (request.auth.token.role == 'agent' || 
+         exists(/databases/$(database)/documents/agents/$(request.auth.uid)));
+    }
+    
+    function isStudent() {
+      return isAuthenticated() && 
+        (request.auth.token.role == 'student' || 
+         exists(/databases/$(database)/documents/students/$(request.auth.uid)));
+    }
+
+    // Students Collection
+    match /students/{studentId} {
+      allow read: if isAuthenticated();
+      allow create: if isAuthenticated() && (request.auth.uid == studentId || isAdmin());
+      allow update: if isAuthenticated() && (request.auth.uid == studentId || isAdmin());
+      allow delete: if isAdmin();
+    }
+
+    // Agents Collection
+    match /agents/{agentId} {
+      allow read: if isAuthenticated();
+      allow write: if isAdmin();
+    }
+
+    // Notifications Collection
+    match /notifications/{notificationId} {
+      allow read: if isAuthenticated();
+      allow create: if isAgent() || isAdmin();
+      allow update: if isAdmin() || (isAgent() && resource.data.createdBy == request.auth.uid);
+      allow delete: if isAdmin() || (isAgent() && resource.data.createdBy == request.auth.uid);
+    }
+
+    // Notification Views (Read Receipts) Collection
+    match /notificationViews/{viewId} {
+      allow read: if isAgent() || isAdmin();
+      allow create: if isStudent() || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+  }
+}
